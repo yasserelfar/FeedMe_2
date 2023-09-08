@@ -226,44 +226,41 @@ class AppCubit extends Cubit<AppStates> {
     final String response =
         await rootBundle.loadString('dataFiles/recipes.json');
     recipes = await json.decode(response);
-    print("recipe name is");
-    print(recipes[1]["name"]);
+
+
   } //done
 
   Future<void> readFavRecipeJson() async {
     final String response =
         await rootBundle.loadString('dataFiles/favRecipes.json');
     favoriteRecipes = await json.decode(response);
-    print("fav recipe is");
-    print(favoriteRecipes[1]["name"]);
   } //done
 
   Future<void> readsweatJson() async {
     final String response =
         await rootBundle.loadString('dataFiles/sweets.json');
     sweets = await json.decode(response);
-    print("sweet is");
-    print(sweets[1]["name"]);
+
   } //done
 
   Future<void> readFavSweetJson() async {
     final String response =
         await rootBundle.loadString('dataFiles/favSweets.json');
     favoriteSweets = await json.decode(response);
-    print("fav sweet is");
-    print(favoriteSweets[1]["name"]);
+
   } //done
 
   Future<void> writeSweets() async {
     final jsonString = json.encode(favoriteSweets);
-    final file = File('dataFiles/favSweets.json');
-    file.writeAsStringSync(jsonString, flush: true);
+    var file = File('dataFiles/favSweets.json');
+    file.writeAsStringSync(jsonString);
+
   }
 
   Future<void> writeRecipes() async {
     final jsonString = json.encode(favoriteRecipes);
     final file = File('dataFiles/favRecipes.json');
-    file.writeAsStringSync(jsonString, flush: true);
+    file.writeAsStringSync(jsonString);
   }
 
   void putPersonalData() {
@@ -320,6 +317,8 @@ class AppCubit extends Cubit<AppStates> {
       await readsweatJson();
       randomSweet(sweets);
       randomRecipe(recipes);
+     await readFavSweetJson();
+     await readFavRecipeJson();
     });
   }
 
