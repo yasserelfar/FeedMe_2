@@ -86,7 +86,7 @@ class SweetsPage extends StatelessWidget {
                                               image: NetworkImage(cubit
                                                       .favoriteSweets[itemIndex]
                                                   ["image"]),
-                                              fit: BoxFit.fill),
+                                              fit: BoxFit.cover),
                                         ),
                                         child: Align(
                                           alignment: Alignment.bottomRight,
@@ -110,10 +110,11 @@ class SweetsPage extends StatelessWidget {
                                                     children: [
                                                       IconButton(
                                                           onPressed: () {
-                                                            cubit.sweet=
-                                                                cubit.favoriteSweets[
+                                                            cubit.sweet = cubit
+                                                                    .favoriteSweets[
                                                                 itemIndex];
-                                                                cubit.DelfavoriteSweet();
+                                                            cubit
+                                                                .DelfavoriteSweet();
                                                           },
                                                           icon: Icon(
                                                             Icons.favorite,
