@@ -10,6 +10,7 @@ class RandomSweets extends StatelessWidget {
     super.key,
   });
 
+
   List<Widget> getBolitPoints(var items) {
     List<Widget> texts = [];
 
@@ -38,6 +39,13 @@ class RandomSweets extends StatelessWidget {
     return BlocBuilder<AppCubit, AppStates>(
       builder: (context, state) {
         AppCubit cubit = AppCubit.get(context);
+        void scrollToTop() {
+          cubit.scrollConS.animateTo(
+            cubit.scrollConS.position.minScrollExtent,
+            duration: const Duration(milliseconds: 2500),
+            curve: Curves.bounceOut,
+          );
+        }
         return Scaffold(
           body: Container(
             height: double.infinity,
@@ -90,17 +98,15 @@ class RandomSweets extends StatelessWidget {
                             alignment: Alignment.bottomRight,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
-
                               children: [
                                 Padding(
-                                  padding:
-                                  const EdgeInsets.only(top: 8),
+                                  padding: const EdgeInsets.only(top: 8),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
-
                                     children: [
                                       IconButton(
-                                          icon: Icon(textDirection: TextDirection.rtl,
+                                          icon: Icon(
+                                            textDirection: TextDirection.rtl,
                                             cubit.isfavoraite
                                                 ? Icons.favorite
                                                 : Icons.favorite_border,
@@ -119,8 +125,8 @@ class RandomSweets extends StatelessWidget {
                                       Container(
                                         height: 80,
                                         decoration: const BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.all(Radius.circular(15)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
                                           color: Colors.black45,
                                         ),
                                         child: Padding(
@@ -132,18 +138,17 @@ class RandomSweets extends StatelessWidget {
                                               cubit.sweet['name'],
                                               textDirection: TextDirection.rtl,
                                               style: const TextStyle(
-                                                  fontSize: 20, color: Colors.white,),
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                              ),
                                               maxLines: 2,
                                             ),
                                           ),
                                         ),
                                       ),
-
                                     ],
                                   ),
-
                                 ),
-
                               ],
                             ),
                           ),
@@ -234,9 +239,9 @@ class RandomSweets extends StatelessWidget {
                                         shadowColor: Colors.white),
                                     onPressed: cubit.prevSweet.isNotEmpty
                                         ? () {
-
-                                            cubit.isfavoraite=false;
+                                            cubit.isfavoraite = false;
                                             cubit.getPrevSweet();
+                                            scrollToTop();
                                           }
                                         : null,
                                     child: const Text(
@@ -264,9 +269,9 @@ class RandomSweets extends StatelessWidget {
                                     color: Color(0xFFFFFAF0D7)),
                               ),
                               onPressed: () {
-                                cubit.isfavoraite=false;
+                                cubit.isfavoraite = false;
                                 cubit.filterSweet();
-
+                                scrollToTop();
                               },
                             ))
                           ],
