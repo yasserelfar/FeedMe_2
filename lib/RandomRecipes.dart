@@ -17,14 +17,14 @@ class RandomRecipe extends StatelessWidget {
       texts.add(Align(
         alignment: Alignment.topRight,
         child: Padding(
-          padding: const EdgeInsets.symmetric
-            (horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Expanded(
             child: Text("# $item",
                 textDirection: TextDirection.rtl,
-                style: const TextStyle(fontSize: 15,
-                    color: Colors.black
-                    ,fontWeight: FontWeight.bold)),
+                style: const TextStyle(
+                    fontSize: 15,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold)),
           ),
         ),
       ));
@@ -38,7 +38,13 @@ class RandomRecipe extends StatelessWidget {
     return BlocBuilder<AppCubit, AppStates>(
       builder: (context, state) {
         AppCubit cubit = AppCubit.get(context);
-
+        void scrollToTop() {
+          cubit.scrollCon.animateTo(
+            cubit.scrollCon.position.minScrollExtent,
+            duration: const Duration(milliseconds: 2500),
+            curve: Curves.bounceOut,
+          );
+        }
         return Scaffold(
           body: Container(
             height: double.infinity,
@@ -64,25 +70,25 @@ class RandomRecipe extends StatelessWidget {
                           spreadRadius: 5,
                           blurRadius: 7,
                           offset:
-                          const Offset(2, 2), // changes position of shadow
+                              const Offset(2, 2), // changes position of shadow
                         ),
                       ],
                       // color: appBarColor,
                       borderRadius:
-                      const BorderRadius.all(Radius.circular(20))),
+                          const BorderRadius.all(Radius.circular(20))),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     textDirection: TextDirection.rtl,
                     children: [
                       Padding(
                         padding:
-                        const EdgeInsets.only(top: 8, right: 8, left: 8),
+                            const EdgeInsets.only(top: 8, right: 8, left: 8),
                         child: Container(
                           width: double.infinity,
                           height: 250,
                           decoration: BoxDecoration(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
+                                const BorderRadius.all(Radius.circular(20)),
                             image: DecorationImage(
                                 image: NetworkImage(cubit.recipe['image']),
                                 fit: BoxFit.fill),
@@ -93,14 +99,13 @@ class RandomRecipe extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Padding(
-                                  padding:
-                                  const EdgeInsets.only(top: 8),
+                                  padding: const EdgeInsets.only(top: 8),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
-
                                     children: [
                                       IconButton(
-                                          icon: Icon(textDirection: TextDirection.rtl,
+                                          icon: Icon(
+                                            textDirection: TextDirection.rtl,
                                             cubit.isRfavoraite
                                                 ? Icons.favorite
                                                 : Icons.favorite_border,
@@ -119,8 +124,8 @@ class RandomRecipe extends StatelessWidget {
                                       Container(
                                         height: 80,
                                         decoration: const BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
                                           color: Colors.black45,
                                         ),
                                         child: Padding(
@@ -132,18 +137,17 @@ class RandomRecipe extends StatelessWidget {
                                               cubit.recipe['name'],
                                               textDirection: TextDirection.rtl,
                                               style: const TextStyle(
-                                                fontSize: 20, color: Colors.white,),
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                              ),
                                               maxLines: 2,
                                             ),
                                           ),
                                         ),
                                       ),
-
                                     ],
                                   ),
-
                                 ),
-
                               ],
                             ),
                           ),
@@ -151,7 +155,7 @@ class RandomRecipe extends StatelessWidget {
                       ),
                       Padding(
                         padding:
-                        const EdgeInsets.only(top: 8, right: 8, left: 8),
+                            const EdgeInsets.only(top: 8, right: 8, left: 8),
                         child: Container(
                           constraints: const BoxConstraints(minHeight: 200),
                           width: double.infinity,
@@ -209,8 +213,8 @@ class RandomRecipe extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: Column(
-                                  children:
-                                  getBolitPoints(cubit.recipe['directions']),
+                                  children: getBolitPoints(
+                                      cubit.recipe['directions']),
                                 ),
                               ),
                             ],
@@ -219,7 +223,7 @@ class RandomRecipe extends StatelessWidget {
                       ),
                       Padding(
                         padding:
-                        const EdgeInsets.only(bottom: 8, right: 8, left: 8),
+                            const EdgeInsets.only(bottom: 8, right: 8, left: 8),
                         child: Row(
                           children: [
                             Expanded(
@@ -230,14 +234,14 @@ class RandomRecipe extends StatelessWidget {
                                             width: 1, color: appBarColor),
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(200)),
+                                                BorderRadius.circular(200)),
                                         shadowColor: Colors.white),
                                     onPressed: cubit.prevRecipe.isNotEmpty
                                         ? () {
-
-                                      cubit.isRfavoraite=false;
-                                      cubit.getPrevRecipe();
-                                    }
+                                            cubit.isRfavoraite = false;
+                                            cubit.getPrevRecipe();
+                                            scrollToTop();
+                                          }
                                         : null,
                                     child: const Text(
                                       "الوصفة السابقة",
@@ -250,31 +254,31 @@ class RandomRecipe extends StatelessWidget {
                             ),
                             Expanded(
                                 child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.black,
-                                      side:
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.black,
+                                  side:
                                       BorderSide(width: 1, color: appBarColor),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(200)),
-                                      shadowColor: Colors.black),
-                                  child: const Text(
-                                    "وصفة جديدة",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFFFFFAF0D7)),
-                                  ),
-                                  onPressed: () {
-                                    cubit.isRfavoraite=false;
-                                    cubit.filterRecipes();
-
-                                  },
-                                ))
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(200)),
+                                  shadowColor: Colors.black),
+                              child: const Text(
+                                "وصفة جديدة",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFFFFFAF0D7)),
+                              ),
+                              onPressed: () {
+                                cubit.isRfavoraite = false;
+                                cubit.filterRecipes();
+                                scrollToTop();
+                              },
+                            ))
                           ],
                         ),
                       ),
                       Padding(
                         padding:
-                        const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                            const EdgeInsets.only(left: 8, right: 8, bottom: 8),
                         child: TextFormField(
                           textDirection: TextDirection.rtl,
                           controller: cubit.searchItems,
@@ -286,7 +290,7 @@ class RandomRecipe extends StatelessWidget {
                                 borderSide: BorderSide(color: Colors.black)),
                             focusedBorder: const OutlineInputBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
+                                    BorderRadius.all(Radius.circular(10.0)),
                                 borderSide: BorderSide(
                                     color: Colors.white38, width: 2.0)),
                             filled: true,
