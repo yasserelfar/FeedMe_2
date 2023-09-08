@@ -88,7 +88,7 @@ class RecipesPage extends StatelessWidget {
                                               image: NetworkImage(
                                                   cubit.favoriteRecipes[
                                                       itemIndex]["image"]),
-                                              fit: BoxFit.fill),
+                                              fit: BoxFit.cover),
                                         ),
                                         child: Align(
                                           alignment: Alignment.bottomRight,
@@ -112,8 +112,9 @@ class RecipesPage extends StatelessWidget {
                                                     children: [
                                                       IconButton(
                                                           onPressed: () {
-                                                            cubit.recipe=cubit.favoriteRecipes[
-                                                            itemIndex];
+                                                            cubit.recipe = cubit
+                                                                    .favoriteRecipes[
+                                                                itemIndex];
                                                             cubit
                                                                 .DelfavoriteRecipe();
                                                           },
