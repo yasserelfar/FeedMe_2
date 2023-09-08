@@ -15,8 +15,6 @@ class FavScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppStates>(
       builder: (context, state) {
-
-
         return DefaultTabController(
           initialIndex: 0,
           length: 2,
